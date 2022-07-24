@@ -1,1 +1,1 @@
-# diy-sailing-instrument-for-performance-small-boat-racing
+# DIY-sailing-instrument-for-performance-small-boat-racing
