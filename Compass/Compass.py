@@ -413,7 +413,7 @@ while True:
 
 
     # file path
-    filename = '~/Sail_box/Compass/Heading.json'
+    filename = 'Heading.json'
 
     # read exisiting json file
     with open(filename) as fp:
