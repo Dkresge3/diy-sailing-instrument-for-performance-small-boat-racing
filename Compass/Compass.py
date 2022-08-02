@@ -406,6 +406,30 @@ while True:
     print(outputString)
 
 
+    import json
+    import time
+    from os import makedirs
+    from os import path
+
+
+    # file path
+    filename = '~/Sail_box/Compass/Heading.json'
+
+    # read exisiting json file
+    with open(filename) as fp:
+        data = json.load(fp)
+
+    #append jsonfile data
+    data.append({ 
+        "Time" : time.time_ns(),
+        "Heading" : tiltCompensatedHeading
+    })
+
+    #writing new data to json
+    with open(filename ,'w') as json_file:
+        json.dump(data,
+        json_file,
+        indent=4)
 
 
 
