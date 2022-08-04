@@ -23,6 +23,7 @@ import math
 import IMU
 import datetime
 import os
+import logging
 
 
 RAD_TO_DEG = 57.29578
@@ -431,6 +432,12 @@ while True:
         json_file,
         indent=4)
 
+logging.basicConfig(filename='Heading.log',level=INFO,
+                    format='%(asctime)s:%(message)s')
+
+
+ 
+    logging.info(tiltCompensatedHeading)
 
 
 
