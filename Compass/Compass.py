@@ -438,7 +438,17 @@ logging.basicConfig(filename='Heading.log',level=INFO,
 
  
     logging.info(tiltCompensatedHeading)
-
+    
+    #make window
+    from tkinter import *
+    Heading = 360
+    window=Tk()
+    lbl=Label(window, text=Heading, bg='black', font=("Helvetica", 16), fg='white')
+    window.configure(bg='black')
+    lbl.pack()
+    window.title('Hello Python')
+    window.geometry("300x200+10+10")
+    window.mainloop()
 
 
     #slow program down a bit, makes the output more readable
