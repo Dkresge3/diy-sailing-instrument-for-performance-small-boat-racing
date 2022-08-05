@@ -195,6 +195,10 @@ if(IMU.BerryIMUversion == 99):
 IMU.initIMU()       #Initialise the accelerometer, gyroscope and compass
 
 
+   
+logging.basicConfig(filename='Heading.log',level=INFO,
+                    format='%(asctime)s:%(message)s')
+
 while True:
 
     #Read the accelerometer,gyroscope and magnetometer values
@@ -400,56 +404,16 @@ while True:
     if 1:                       #Change to '0' to stop  showing the angles from the Kalman filter
         outputString +="# kalmanX %5.2f   kalmanY %5.2f #" % (kalmanX,kalmanY)
 
-
-
-
-
     print(outputString)
 
-
-    import json
-    import time
-    from os import makedirs
-    from os import path
-
-
-    # file path
-    filename = 'Heading.json'
-
-    # read exisiting json file
-    with open(filename) as fp:
-        data = json.load(fp)
-
-    #append jsonfile data
-    data.append({ 
-        "Time" : time.time_ns(),
-        "Heading" : tiltCompensatedHeading
-    })
-
-    #writing new data to json
-    with open(filename ,'w') as json_file:
-        json.dump(data,
-        json_file,
-        indent=4)
-
-logging.basicConfig(filename='Heading.log',level=INFO,
-                    format='%(asctime)s:%(message)s')
+    
+    
+ 
 
 
  
     logging.info(tiltCompensatedHeading)
     
-    #make window
-    from tkinter import *
-    Heading = 360
-    window=Tk()
-    lbl=Label(window, text=Heading, bg='black', font=("Helvetica", 16), fg='white')
-    window.configure(bg='black')
-    lbl.pack()
-    window.title('Hello Python')
-    window.geometry("300x200+10+10")
-    window.mainloop()
-
-
     #slow program down a bit, makes the output more readable
     time.sleep(0.03)
+
