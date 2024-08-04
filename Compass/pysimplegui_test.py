@@ -1,26 +1,29 @@
 import PySimpleGUI as sg
 import threading
+import queue
 from berryIMU import *
 
 # Initialize the IMU sensor
 imu = BerryIMU()
 
-def get_compass_data(window: sg.Window):
+def get_compass_data(q: queue.Queue):
     while True:
         heading = imu.get_compass_data()
-        window.write_event_value('-UPDATE-', heading)
+        q.put(heading)
         time.sleep(1)  # Pause for 1 second
 
 layout = [[sg.Text('0', key='-TEXT-')]]
 window = sg.Window('Hello Example', layout, finalize=True)
 
-threading.Thread(target=get_compass_data, args=(window,), daemon=True).start()
+q = queue.Queue()
+threading.Thread(target=get_compass_data, args=(q,), daemon=True).start()
 
 while True:
-    event, values = window.read()
+    event, values = window.read(timeout=100)  # Check for events every 100 ms
     if event == sg.WIN_CLOSED:
         break
-    if event == '-UPDATE-':
-        window['-TEXT-'].update(values['-UPDATE-'])
+    if not q.empty():
+        heading = q.get()
+        window['-TEXT-'].update(heading)
 
 window.close()
